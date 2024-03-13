@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Question;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class QuestionSeeder extends Seeder
 {
@@ -12,6 +13,14 @@ class QuestionSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        for ($i = 1; $i < 30; $i++) {
+    
+            Question::create([
+                'name' => 'Question ' . $i,
+                'is_active' => rand(0,1),
+                'type' => rand(0,1)
+
+            ]);
+        }
     }
 }
