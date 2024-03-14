@@ -43,6 +43,17 @@ class User extends Authenticatable
     ];
 
 
+    public static function boot(){
+
+        parent::boot();
+
+        static::creating(function ($user) {
+            if(!$user->role_id){
+                $user->role_id = 2;
+            }
+        });
+    }
+
     public function questionnaire()
     {
         return $this->hasMany(Questionnaire::class);
