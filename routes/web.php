@@ -18,6 +18,10 @@ Route::get('/', function () {
     return view('home');
 });
 
+Route::prefix('moderator')->middleware(['auth', 'isModerator'])->group(function () {
+    Route::get('/question', [App\Http\Controllers\QuestionController::class, 'index'])->name('question');
+});
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
