@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class InvitationController extends Controller
 {
@@ -11,23 +13,35 @@ class InvitationController extends Controller
      */
     public function index()
     {
-        //
+
+        return view('moderator.invitations');
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function createInvitation()
     {
-        //
+        $inviteToken = Session::get('inviteToken', null);
+
+        return view('moderator.invitations', [
+            'inviteToken' => $inviteToken,
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function storeUser(Request $request)
     {
-        //
+        $username = $request->input('username');
+        $password = $request->input('password');
+
+        User::create([
+            'username' => $username,
+            'password' => $password,
+        ]);
+
     }
 
     /**

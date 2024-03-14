@@ -1,0 +1,21 @@
+body {
+    background-image: url('/assets/imgs/flash.public.png');
+    background-position: bottom right;
+    background-repeat: no-repeat; 
+    background-attachment: fixed;
+    /* background-size: contain;  */
+}
+
+
+.home-btns a{
+    border: none;
+    width: 100px;
+}
+
+.home-btns .login{
+    background-color: #a3a2a2;
+}
+
+.home-btns .register{
+    background-color: #564c4b;
+}

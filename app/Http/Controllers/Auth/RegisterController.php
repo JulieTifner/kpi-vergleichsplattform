@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
 {
@@ -37,7 +40,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        // $this->middleware('guest');
     }
 
     /**
@@ -72,6 +75,24 @@ class RegisterController extends Controller
         ]);
     }
 
+
+    public function registerModerator(Request $request){
+    
+            $this->validator($request->all())->validate();
+            event(new Registered($this->createModerator($request->all())));
+            return redirect()->back()->with('success', 'Moderator created successfully');
+
+    }
+
+
+    public function createModerator(array $data){
+
+        return User::create([
+            'username' => $data['username'],
+            'password' => Hash::make($data['password']),
+            'role_id' => 1
+        ]);
+    }
     /**
      * Create a new user instance after a valid registration.
      *

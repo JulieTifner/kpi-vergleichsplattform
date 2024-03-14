@@ -20,6 +20,9 @@ Route::get('/', function () {
 
 Route::prefix('moderator')->middleware(['auth', 'isModerator'])->group(function () {
     Route::get('/question', [App\Http\Controllers\QuestionController::class, 'index'])->name('question');
+    Route::get('/invitation', [App\Http\Controllers\InvitationController::class, 'index'])->name('invitation');
+    Route::post('/register/moderator', [App\Http\Controllers\Auth\RegisterController::class, 'registerModerator'])->name('register.moderator');
+
 });
 
 Route::prefix('user')->middleware(['auth', 'isUser'])->group(function () {

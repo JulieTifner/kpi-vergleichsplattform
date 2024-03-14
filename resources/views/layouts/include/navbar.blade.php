@@ -19,6 +19,9 @@
                         <li class="nav-item ">
                             <a class="nav-link text-white" href="{{ route('question') }}">Questions </a>
                         </li>
+                        <li class="nav-item ">
+                            <a class="nav-link text-white" href="{{ route('invitation') }}">Invite </a>
+                        </li>
                     @endmoderator
                     @user
                         <li class="nav-item ">
