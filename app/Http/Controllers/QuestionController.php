@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Question;
 use Illuminate\Http\Request;
 
 class QuestionController extends Controller
@@ -11,7 +12,10 @@ class QuestionController extends Controller
      */
     public function index()
     {
-    
+        $questions = Question::all();
+        return view('moderator.questions', [
+            'questions' => $questions,
+        ]);
     }
 
     /**
