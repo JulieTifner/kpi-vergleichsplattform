@@ -23,11 +23,9 @@ class AnswerSeeder extends Seeder
             $questionId = $question->id;
 
             if ($question->type) {
-                // Für 'type' == true, zufällige Prozentzahl zwischen 0 und 100
                 $answerValue = rand(0, 100);
             } else {
-                // Für 'type' == false, zufällige Zahl zwischen 0 und 100
-                $answerValue = rand(1, 100);
+                $answerValue = rand(0, 1000);
             }
 
             Answer::create([
