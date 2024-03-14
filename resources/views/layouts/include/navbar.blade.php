@@ -15,7 +15,17 @@
                     <li class="nav-item ">
                         <a class="nav-link text-white" href="{{ route('home') }}">Home </a>
                     </li>
-            
+                    @moderator
+                        <li class="nav-item ">
+                            <a class="nav-link text-white" href="{{ route('question') }}">Questions </a>
+                        </li>
+                    @endmoderator
+                    @user
+                        <li class="nav-item ">
+                            <a class="nav-link text-white" href="{{ route('questionnaire') }}">Questionnaire </a>
+                        </li>
+                    @enduser
+
                 </ul>
 
                 <!-- Right Side Of Navbar -->

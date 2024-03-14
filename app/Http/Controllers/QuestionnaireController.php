@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Questionnaire;
+use Illuminate\Support\Facades\Auth;
 
 class QuestionnaireController extends Controller
 {
@@ -11,7 +13,11 @@ class QuestionnaireController extends Controller
      */
     public function index()
     {
-        //
+        $questionnaires = Questionnaire::where('user_id', Auth::id())->get();
+
+        return view('user.questionnaire_overview', [
+            'questionnaires' => $questionnaires,
+        ]);    
     }
 
     /**

@@ -22,6 +22,10 @@ Route::prefix('moderator')->middleware(['auth', 'isModerator'])->group(function 
     Route::get('/question', [App\Http\Controllers\QuestionController::class, 'index'])->name('question');
 });
 
+Route::prefix('user')->middleware(['auth', 'isUser'])->group(function () {
+    Route::get('/questionnaire', [App\Http\Controllers\QuestionnaireController::class, 'index'])->name('questionnaire');
+});
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -20,6 +20,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-     
+        Blade::if('moderator', function () {
+            return auth()->check() && auth()->user()->role->name == 'moderator';
+        });
+
+        Blade::if('user', function () {
+            return auth()->check() && auth()->user()->role->name == 'user';
+        });
     }
 }
