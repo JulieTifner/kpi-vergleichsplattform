@@ -23,6 +23,7 @@ Route::prefix('moderator')->middleware(['auth', 'isModerator'])->group(function 
     Route::post('/store', [App\Http\Controllers\QuestionController::class, 'store'])->name('store');
     Route::put('/update/{id}', [App\Http\Controllers\QuestionController::class, 'update'])->name('update');
     Route::get('/edit/{id}', [App\Http\Controllers\QuestionController::class, 'edit'])->name('edit');
+    Route::delete('/delete/{id}', [App\Http\Controllers\QuestionController::class, 'destroy'])->name('delete');
     Route::get('/invitation', [App\Http\Controllers\InvitationController::class, 'index'])->name('invitation');
     Route::post('/register/moderator', [App\Http\Controllers\Auth\RegisterController::class, 'registerModerator'])->name('register.moderator');
 

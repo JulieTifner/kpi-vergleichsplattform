@@ -84,7 +84,6 @@
                                         @else
                                             <td><span class="badge badge-secondary">Inactive</span></td>
                                         @endif
-
                                         <td style="width: 100px;">
                                             <div class="d-flex justify-content-center" role="group">
                                                 <a href="{{ route('edit', $q->id) }}"
@@ -93,12 +92,12 @@
                                                     <i class="fas fa-pencil-alt"></i>
                                                 </a>
 
-                                                <form action="" method="POST" style="display:inline;">
+                                                <form action="{{ route('delete', $q->id) }}" method="POST"
+                                                    style="display:inline;">
                                                     @method('DELETE')
                                                     @csrf
                                                     <button type="submit" class="btn btn-danger btn-sm"
-                                                        style="color:white;"
-                                                        onclick="return confirm('Are you sure to delete?')">
+                                                        style="color:white;" onclick="return confirm('Are you sure to delete?')">
                                                         <i class="fas fa-trash"></i>
                                                     </button>
                                                 </form>

@@ -101,6 +101,11 @@ class QuestionController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $question = Question::find($id);
+
+        if ($question) {
+            $question->delete();
+            return redirect()->back()->with('success', 'Question successfully deleted.');
+        }
     }
 }
