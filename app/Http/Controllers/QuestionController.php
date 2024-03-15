@@ -66,7 +66,11 @@ class QuestionController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $question = Question::find($id);
+
+        return view('moderator.edit', [
+            'question' => $question,
+        ]);
     }
 
     /**
@@ -74,7 +78,22 @@ class QuestionController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'type' => 'required|integer',
+        ]);
+
+        $isActive = $request->input('is_active') == 'on';
+        $question = Question::findOrFail($id);
+
+        $question->update([
+            'name'      => $validatedData['name'],
+            'type'      => $validatedData['type'],
+            'is_active' => $isActive,
+        ]);
+
+        return redirect()->route('question')->with('success', 'Question updated successfully');
+
     }
 
     /**

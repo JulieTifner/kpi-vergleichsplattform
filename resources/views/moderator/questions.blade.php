@@ -87,7 +87,8 @@
 
                                         <td style="width: 100px;">
                                             <div class="d-flex justify-content-center" role="group">
-                                                <a href="" class="btn btn-primary btn-sm me-2 edit-button"
+                                                <a href="{{ route('edit', $q->id) }}"
+                                                    class="btn btn-primary btn-sm me-2 edit-button"
                                                     style="color:white; text-decoration: none;">
                                                     <i class="fas fa-pencil-alt"></i>
                                                 </a>

@@ -37,22 +37,15 @@ body {
 }
 
  .table-container{
-    /* width: 100%; */
     max-height: 45em;
     overflow-x: hidden;
     overflow-y: auto;
     text-align: justify;
-}
-
-
-.table-container {
-    max-width: 200em;
     margin: 50px auto;
-    /* padding: 20px; */
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
     background-color: white;
-
 }
+
 
 .table-container table {
     width: 100%;
