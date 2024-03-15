@@ -1,9 +1,61 @@
 @extends('layouts.app')
 
 @section('content')
+    <!-- Modal Create Question -->
+    <div class="modal" id="createModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create New Question</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="form" action="{{ route('store') }}" method="POST">
+                        @csrf
+                        <div class="form-group">
+                            <label for="question">Question</label>
+                            <textarea type="text" class="form-control w-100" id="title" name="name"></textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="type">Type</label>
+                                    <select class="form-control" id="type" name="type">
+                                        <option value="1">Percent</option>
+                                        <option value="0">Number</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="activate" class="d-block">Activate</label>
+                                    <input type="checkbox" id="activate" name="is_active" checked>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-dark" form="form">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Create Question End-->
+
     <div class="container mt-4">
         <div class="row justify-content-center">
             <div class="col-md-10">
+                @if (session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" id="success-message" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
                 <h2>Questions</h2>
                 <div class="questions">
                     <div class="table-container">
@@ -57,7 +109,10 @@
                             </tbody>
                         </table>
                     </div>
-
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="btn btn-success" style="color:white;" data-bs-toggle="modal"
+                            data-bs-target="#createModal">Create</button>
+                    </div>
                 </div>
             </div>
         </div>

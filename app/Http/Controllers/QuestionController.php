@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Question;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class QuestionController extends Controller
 {
@@ -31,7 +32,25 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $inputs = $request->all();
+
+        $rules = [
+            'name' => 'required|string|max:255',
+        ];
+
+        $validator = Validator::make($inputs, $rules);
+        
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        Question::create([
+            'name'      => $request->input('name'),
+            'type'      => $request->input('type'),
+            'is_active' => $request->has('is_active') ? 1 : 0
+        ]);
+
+        return redirect()->back()->with('success', 'Question added successfully');
     }
 
     /**
