@@ -4,11 +4,17 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
+                @if (session('error'))
+                    <div class="alert alert-danger" id="error-message">
+                        {{ session('error') }}
+                    </div>
+                @endif
                 <div class="card">
                     <div class="card-header">{{ __('Register') }}</div>
                     <div class="card-body">
                         <form method="POST" action="{{ route('register') }}">
                             @csrf
+                            <input type="hidden" name="token" value="{{ $token }}">
                             <div class="row mb-3">
                                 <label for="username"
                                     class="col-md-4 col-form-label text-md-end">{{ __('Username') }}</label>

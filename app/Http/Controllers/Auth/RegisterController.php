@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
+use App\Models\Invitation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -75,17 +78,54 @@ class RegisterController extends Controller
         ]);
     }
 
+    public function register(Request $request)
+    {
 
-    public function registerModerator(Request $request){
-    
-            $this->validator($request->all())->validate();
-            event(new Registered($this->createModerator($request->all())));
-            return redirect()->back()->with('success', 'Moderator created successfully');
+        $this->validator($request->all())->validate();
+        
+        $hash = $request->token;
+   
+        if (!$hash) {
+            return redirect()->back()->with('error', 'Invalid or expired invitation token');
+        }
+        event(new Registered($user = $this->create($request->all())));
 
+        $invitation = Invitation::where('token', $hash)->first();
+        $id = $invitation->id;
+        $i = Invitation::find($id);
+        $i->delete();
+
+        $this->guard()->login($user);
+
+        if ($response = $this->registered($request, $user)) {
+            return $response;
+        }
+
+        return $request->wantsJson()
+            ? new JsonResponse([], 201)
+            : redirect($this->redirectPath());
+    }
+
+    public function showRegistration($token = null)
+    {
+        $invitation = Invitation::where('token', $token)
+            ->where('expiration_date', '>', Carbon::now())
+            ->first();
+
+        return view('auth.register', compact('token'));
+    }
+
+    public function registerModerator(Request $request)
+    {
+
+        $this->validator($request->all())->validate();
+        event(new Registered($this->createModerator($request->all())));
+        return redirect()->back()->with('success', 'Moderator created successfully');
     }
 
 
-    public function createModerator(array $data){
+    public function createModerator(array $data)
+    {
 
         return User::create([
             'username' => $data['username'],

@@ -23,7 +23,7 @@
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                     <a href="{{ route('create.invitation') }}" class="btn btn-primary mt-5">Generate Link</a>
-                    <p class="card-text mt-5"><a href="">{{ route('token', $inviteToken) }}</a></p>
+                    <p class="card-text mt-5"><a href="">{{ route('register.link', $inviteToken) }}</a></p>
                 </div>
             {{-- Create Moderator --}}
                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">

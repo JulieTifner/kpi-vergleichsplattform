@@ -19,7 +19,7 @@ Route::get('/', function () {
 });
 Route::post('/registration', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('registration');
 
-Route::get('/register/{token?}', [App\Http\Controllers\Auth\RegisterController::class, 'showRegistrationForm'])->name('token');
+Route::get('/register/{token?}', [App\Http\Controllers\Auth\RegisterController::class, 'showRegistration'])->name('register.link');
 
 Route::prefix('moderator')->middleware(['auth', 'isModerator'])->group(function () {
     Route::get('/question', [App\Http\Controllers\QuestionController::class, 'index'])->name('question');
