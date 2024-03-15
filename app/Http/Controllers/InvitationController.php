@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Invitation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Session;
 
 class InvitationController extends Controller
@@ -12,20 +14,33 @@ class InvitationController extends Controller
      */
     public function index()
     {
-
-        return view('moderator.invitations');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function createInvitation()
-    {
         $inviteToken = Session::get('inviteToken', null);
 
         return view('moderator.invitations', [
             'inviteToken' => $inviteToken,
         ]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        $inviteToken = $this->randHash(20);
+        
+        Session::put('inviteToken', $inviteToken);
+
+        Invitation::create([
+            'token'           => $inviteToken,
+            'expiration_date' => Carbon::now()->addDays(7)
+        ]);
+
+        return redirect()->action([InvitationController::class, 'index']);
+    }
+
+    function randHash($len = 32)
+    {
+        return substr(md5(openssl_random_pseudo_bytes(20)), -$len);
     }
 
     /**

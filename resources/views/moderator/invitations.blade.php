@@ -18,10 +18,14 @@
                     <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
                         role="tab" aria-controls="profile" aria-selected="false">Create Moderator</button>
                 </li>
-
             </ul>
+            {{-- Generate Link --}}
             <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <a href="{{ route('create.invitation') }}" class="btn btn-primary mt-5">Generate Link</a>
+                    <p class="card-text mt-5"><a href="">{{ route('token', $inviteToken) }}</a></p>
+                </div>
+            {{-- Create Moderator --}}
                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                     <div class="row justify-content-center">
                         <div class="mt-5 col-md-8">
@@ -59,7 +63,6 @@
                                         @enderror
                                     </div>
                                 </div>
-
                                 <div class="row mb-3">
                                     <label for="password-confirm"
                                         class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
@@ -74,10 +77,7 @@
                                         <button type="submit" class="btn btn-dark">Save</button>
                                     </div>
                                 </div>
-                              
-
                             </form>
-
                         </div>
                     </div>
                 </div>

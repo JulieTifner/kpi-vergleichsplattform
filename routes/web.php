@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('home');
 });
+Route::post('/registration', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('registration');
+
+Route::get('/register/{token?}', [App\Http\Controllers\Auth\RegisterController::class, 'showRegistrationForm'])->name('token');
 
 Route::prefix('moderator')->middleware(['auth', 'isModerator'])->group(function () {
     Route::get('/question', [App\Http\Controllers\QuestionController::class, 'index'])->name('question');
@@ -26,6 +29,7 @@ Route::prefix('moderator')->middleware(['auth', 'isModerator'])->group(function 
     Route::delete('/delete/{id}', [App\Http\Controllers\QuestionController::class, 'destroy'])->name('delete');
     Route::get('/invitation', [App\Http\Controllers\InvitationController::class, 'index'])->name('invitation');
     Route::post('/register/moderator', [App\Http\Controllers\Auth\RegisterController::class, 'registerModerator'])->name('register.moderator');
+    Route::get('/invitation/create', [App\Http\Controllers\InvitationController::class, 'create'])->name('create.invitation');
 
 });
 
