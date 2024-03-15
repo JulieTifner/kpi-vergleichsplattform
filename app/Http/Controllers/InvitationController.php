@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -32,16 +31,9 @@ class InvitationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function storeUser(Request $request)
+    public function store()
     {
-        $username = $request->input('username');
-        $password = $request->input('password');
-
-        User::create([
-            'username' => $username,
-            'password' => $password,
-        ]);
-
+   
     }
 
     /**
