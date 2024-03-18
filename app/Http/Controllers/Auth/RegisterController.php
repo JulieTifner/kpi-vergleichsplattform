@@ -80,7 +80,7 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
-
+        //Validate data
         $this->validator($request->all())->validate();
         
         $hash = $request->token;
@@ -88,13 +88,16 @@ class RegisterController extends Controller
         if (!$hash) {
             return redirect()->back()->with('error', 'Invalid or expired invitation token');
         }
+        //Create User
         event(new Registered($user = $this->create($request->all())));
 
+        //Delete hash
         $invitation = Invitation::where('token', $hash)->first();
         $id = $invitation->id;
         $i = Invitation::find($id);
         $i->delete();
 
+        //Copied from RegistersUsers trait
         $this->guard()->login($user);
 
         if ($response = $this->registered($request, $user)) {
@@ -120,6 +123,7 @@ class RegisterController extends Controller
 
         $this->validator($request->all())->validate();
         event(new Registered($this->createModerator($request->all())));
+        
         return redirect()->back()->with('success', 'Moderator created successfully');
     }
 

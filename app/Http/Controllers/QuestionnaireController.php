@@ -88,6 +88,11 @@ class QuestionnaireController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $questionnaire = Questionnaire::find($id);
+
+        if($questionnaire){
+            $questionnaire->delete();
+            return redirect()->back()->with('success', 'Questionnaire successfully deleted.');
+        }
     }
 }

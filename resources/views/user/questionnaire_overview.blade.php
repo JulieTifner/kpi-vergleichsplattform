@@ -52,6 +52,12 @@
     <div class="container mt-4">
         <div class="row justify-content-center">
             <div class="col-md-10">
+                @if (session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" id="success-message" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
                 <h2>Questionnaires</h2>
                 <div class="questionnaires">
                     <div class="table-container">
@@ -82,7 +88,8 @@
                                                 <a href="" class="btn btn-dark btn-sm me-2"
                                                     style="background-color: #3168ff; border: none;">Compare</a>
 
-                                                <form action="" method="POST" style="display:inline;">
+                                                <form action="{{ route('questionnaire.delete', $q->id) }}" method="POST"
+                                                    style="display:inline;">
                                                     @method('DELETE')
                                                     @csrf
                                                     <button type="submit" class="btn btn-danger btn-sm"

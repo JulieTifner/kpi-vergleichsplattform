@@ -35,7 +35,7 @@ class InvitationController extends Controller
             'expiration_date' => Carbon::now()->addDays(7)
         ]);
 
-        return redirect()->action([InvitationController::class, 'index']);
+        return redirect()->back();
     }
 
     function randHash($len = 32)
