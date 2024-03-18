@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\Session;
 class InvitationController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Displays the invitations view for moderators and invite token from session.
+     *
+     * @return \Illuminate\View\View
      */
     public function index()
     {
@@ -22,7 +24,9 @@ class InvitationController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Generates a new invitation token, saves it in session and stores it in database with an expiration date.
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function create()
     {
@@ -38,48 +42,17 @@ class InvitationController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * Generates a random hash string of a specified length.
+     *
+     * @param int $len
+     * @return string 
+     * 
+     */
     function randHash($len = 32)
     {
         return substr(md5(openssl_random_pseudo_bytes(20)), -$len);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store()
-    {
-   
-    }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

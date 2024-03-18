@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\Validator;
 class QuestionController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Retreive all Questions from database and display them on the questions view
+     *
+     * @return \Illuminate\View\View
      */
     public function index()
     {
@@ -19,17 +21,12 @@ class QuestionController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
+   /**
+    * handles submission of form, validates input and stores the question to database
+    *
+    * @param  \Illuminate\Http\Request
+    * @return \Illuminate\Http\RedirectResponse
+    */
     public function store(Request $request)
     {
         $inputs = $request->all();
@@ -53,17 +50,13 @@ class QuestionController extends Controller
         return redirect()->back()->with('success', 'Question added successfully');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
 
     /**
-     * Show the form for editing the specified resource.
-     */
+    * Get a specific question from the database based on its ID and displays the edit form.
+    *
+    * @param  string $id
+    * @return \Illuminate\View\View
+    */
     public function edit(string $id)
     {
         $question = Question::find($id);
@@ -74,7 +67,11 @@ class QuestionController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Updates existing question in the database based on the submitted form data.
+     *
+     * @param  \Illuminate\Http\Request
+     * @param  string $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, string $id)
     {
@@ -97,7 +94,10 @@ class QuestionController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     *  Deletes a specific question identified by its ID from the database.
+     *
+     * @param  string $id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(string $id)
     {

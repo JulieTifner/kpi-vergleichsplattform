@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\Validator;
 class QuestionnaireController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Retrieves all questionnaires associated with the currently authenticated user from the database.
+     *
+     * @return \Illuminate\View\View 
      */
     public function index()
     {
@@ -21,17 +23,14 @@ class QuestionnaireController extends Controller
         ]);    
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+
 
     /**
-     * Store a newly created resource in storage.
-     */
+    * Handles the creation of a new questionnaire based on user input.
+    *
+    * @param \Illuminate\Http\Request
+    * @return \Illuminate\Http\RedirectResponse
+    */
     public function store(Request $request)
     {
         $inputs = $request->all();
@@ -40,7 +39,7 @@ class QuestionnaireController extends Controller
             'year' => [
                 'required',
                 'integer',
-                'regex:/^(19|20)\d{2}$/', //erlaubt die Jahrhunderte 1900 und 2000 und verlangt 4 Ziffern
+                'regex:/^(19|20)\d{2}$/', // Allows for years in the 20th and 21st centuries, requiring 4 digits.
 
             ],
         ];
@@ -59,33 +58,13 @@ class QuestionnaireController extends Controller
         return redirect()->back()->with('success', 'Questionnaire added successfully');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
+  /**
+   * Deletes a specific questionnaire identified by its ID.
+   * 
+   * @param string $id
+   * @return \Illuminate\Http\RedirectResponse
+   */
     public function destroy(string $id)
     {
         $questionnaire = Questionnaire::find($id);
