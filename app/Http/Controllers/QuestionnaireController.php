@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Questionnaire;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class QuestionnaireController extends Controller
 {
@@ -33,7 +34,29 @@ class QuestionnaireController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $inputs = $request->all();
+        $rules = [
+            'name' => 'required|string|max:255',
+            'year' => [
+                'required',
+                'integer',
+                'regex:/^(19|20)\d{2}$/', //erlaubt die Jahrhunderte 1900 und 2000 und verlangt 4 Ziffern
+
+            ],
+        ];
+
+        $validator = Validator::make($inputs, $rules);
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        Questionnaire::create([
+            'name' => $request->input('name'),
+            'year' => $request->input('year'),
+            'timespan' => $request->input('timespan'),
+            'user_id' => Auth::user()->id,
+        ]);
+        return redirect()->back()->with('success', 'Questionnaire added successfully');
     }
 
     /**

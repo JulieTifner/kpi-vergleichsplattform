@@ -33,7 +33,7 @@
                                 @csrf
                                 <div class="row mb-3">
                                     <label for="username"
-                                        class="col-md-4 col-form-label text-md-end">{{ __('Username') }}</label>
+                                        class="col-md-4 col-form-label text-md-end required">{{ __('Username') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="username" type="text"
@@ -49,7 +49,7 @@
                                 </div>
                                 <div class="row mb-3">
                                     <label for="password"
-                                        class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+                                        class="col-md-4 col-form-label text-md-end required">{{ __('Password') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="password" type="password"
@@ -65,7 +65,7 @@
                                 </div>
                                 <div class="row mb-3">
                                     <label for="password-confirm"
-                                        class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
+                                        class="col-md-4 col-form-label text-md-end required">{{ __('Confirm Password') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="password-confirm" type="password" class="form-control"

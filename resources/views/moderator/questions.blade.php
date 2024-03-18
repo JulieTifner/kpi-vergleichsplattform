@@ -15,8 +15,8 @@
                     <form id="form" action="{{ route('store') }}" method="POST">
                         @csrf
                         <div class="form-group">
-                            <label for="question">Question</label>
-                            <textarea type="text" class="form-control w-100" id="title" name="name"></textarea>
+                            <label for="question" class="required">Question</label>
+                            <textarea type="text" class="form-control w-100" id="title" name="name" required></textarea>
                         </div>
                         <div class="row">
                             <div class="col-md-6">

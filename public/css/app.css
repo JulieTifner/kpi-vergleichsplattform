@@ -6,6 +6,11 @@ body {
     /* background-size: contain;  */
 }
 
+label.required:after {
+    content: " *";
+    color: red;
+}
+
 
 .home-btns a{
     border: none;
