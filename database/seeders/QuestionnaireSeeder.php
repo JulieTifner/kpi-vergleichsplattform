@@ -26,7 +26,7 @@ class QuestionnaireSeeder extends Seeder
             'Q3',
             'Q4',
         ];
-           for ($i = 1; $i < 10; $i++) {
+           for ($i = 1; $i < 30; $i++) {
 
             $userId = User::where('role_id', 2)->inRandomOrder()->first()->id;
             $randomTimespan = $timespan[array_rand($timespan)];
@@ -36,7 +36,7 @@ class QuestionnaireSeeder extends Seeder
                 'name' => 'Questionnaire title ' . $i,
                 'year' => $randomYear,
                 'timespan' => $randomTimespan,
-                'user_id' => $userId,
+                'user_id' => 1,
             ]);
         }
     }
