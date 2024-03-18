@@ -77,7 +77,12 @@ class RegisterController extends Controller
             'username.regex' => 'Username must not contain @.'
         ]);
     }
-
+    /**
+     * Handles the registration of a new user with an invitation token.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response 
+     */
     public function register(Request $request)
     {
         //Validate data
@@ -109,6 +114,12 @@ class RegisterController extends Controller
             : redirect($this->redirectPath());
     }
 
+    /**
+     * Displays the registration form to the user with a valid invitation token.
+     *
+     * @param string|null $token
+     * @return \Illuminate\View\View 
+     */
     public function showRegistration($token = null)
     {
         $invitation = Invitation::where('token', $token)
@@ -118,6 +129,12 @@ class RegisterController extends Controller
         return view('auth.register', compact('token'));
     }
 
+    /**
+     * Registers a new moderator based on user input.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse 
+     */
     public function registerModerator(Request $request)
     {
 
@@ -127,7 +144,12 @@ class RegisterController extends Controller
         return redirect()->back()->with('success', 'Moderator created successfully');
     }
 
-
+    /**
+     * Creates a new moderator user in the database.
+     *
+     * @param array $data
+     * @return \App\Models\User
+     */
     public function createModerator(array $data)
     {
 

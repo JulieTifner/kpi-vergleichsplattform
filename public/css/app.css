@@ -89,3 +89,15 @@ label.required:after {
     padding: 20px 10px;
    
 }
+
+/* questionnaire */
+
+.questionnaire .card-body {
+    margin: 4px, 4px;
+    padding: 4px;
+    width: 600px;
+    height: 700px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-align: justify;
+}

@@ -12,7 +12,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="eventForm" action="{{ route('questionnaire.store') }}" method="POST">
+                    <form id="form" action="{{ route('questionnaire.store') }}" method="POST">
                         @csrf
                         <div class="row">
                             <div class="form-group">
@@ -43,7 +43,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-dark" form="eventForm">Save</button>
+                    <button type="submit" class="btn btn-dark" form="form">Save</button>
                 </div>
             </div>
         </div>
@@ -82,7 +82,7 @@
                                         <td style="width: 100px;">
                                             <div class="d-flex" role="group">
 
-                                                <a href="" class="btn btn-dark btn-sm me-2"
+                                                <a href="{{ route('questionnaire.show', $q->id) }}" class="btn btn-dark btn-sm me-2"
                                                     style="background-color: #f86e38; border:none;">Answer</a>
 
                                                 <a href="" class="btn btn-dark btn-sm me-2"

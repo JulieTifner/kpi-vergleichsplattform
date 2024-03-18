@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Question;
 use Illuminate\Http\Request;
 use App\Models\Questionnaire;
 use Illuminate\Support\Facades\Auth;
@@ -22,8 +23,6 @@ class QuestionnaireController extends Controller
             'questionnaires' => $questionnaires,
         ]);    
     }
-
-
 
     /**
     * Handles the creation of a new questionnaire based on user input.
@@ -58,6 +57,16 @@ class QuestionnaireController extends Controller
         return redirect()->back()->with('success', 'Questionnaire added successfully');
     }
 
+    public function show(string $id){
+
+        $questionnaire = Questionnaire::find($id);
+        $questions = Question::where('is_active', true)->get();
+
+        return view('user.questionnaire', [
+            'questions'     => $questions,
+            'questionnaire' => $questionnaire
+        ]);
+    }
 
   /**
    * Deletes a specific questionnaire identified by its ID.
