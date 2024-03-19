@@ -12,7 +12,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form action="" method="post" style="width: 37rem;">
+                    <form action="{{ route('answers.store') }}" method="post" style="width: 37rem;">
                         @csrf
                         @foreach ($questions as $q)
                             <div class="mb-3">
@@ -26,6 +26,9 @@
                                     id="answer-addon{{ $q->id }}">{{ $q->type == 1 ? '%' : '0' }}</span>
                                 </div>
                             </div>
+                            <input type="hidden" name="questions[{{ $q->id }}][id]" value="{{ $q->id }}">
+                            <input type="hidden" name="questions[{{ $q->type }}][type]" value="{{ $q->type }}">
+                            <input type="hidden" name="questionnaire_id" value="{{ $questionnaire->id }}">
                         @endforeach
                         <div class="p-4 d-flex justify-content-end">
                             <a href="{{ route('questionnaire') }}" class="btn btn-secondary me-2">Cancel</a>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Answer;
 use App\Models\Question;
 use Illuminate\Http\Request;
 use App\Models\Questionnaire;
@@ -57,6 +58,8 @@ class QuestionnaireController extends Controller
         return redirect()->back()->with('success', 'Questionnaire added successfully');
     }
 
+
+
     public function show(string $id){
 
         $questionnaire = Questionnaire::find($id);
@@ -66,6 +69,30 @@ class QuestionnaireController extends Controller
             'questions'     => $questions,
             'questionnaire' => $questionnaire
         ]);
+    }
+
+
+
+    public function storeAnswers(Request $request){
+
+        $questionnaireId = $request->input('questionnaire_id');
+        $answers = $request->input('answers');
+
+        foreach($answers as $questionId => $answer){
+            $existingAnswer = Answer::where('question_id', $questionId)
+            ->where('questionnaire_id', $questionnaireId)
+            ->first();
+
+            if($existingAnswer){
+                $existingAnswer->update(['name' => $answer]);
+            }
+            Answer::create([
+                'name'             => $answer,
+                'question_id'      => $questionId,
+                'questionnaire_id' => $questionnaireId
+            ]);
+        }
+        return redirect()->back();
     }
 
   /**
