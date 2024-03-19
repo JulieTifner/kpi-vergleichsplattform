@@ -63,7 +63,9 @@ class QuestionnaireController extends Controller
     public function show(string $id){
 
         $questionnaire = Questionnaire::find($id);
-        $questions = Question::where('is_active', true)->get();
+        $questions = Question::with(['answer' => function ($query) use ($id){
+            $query->where('questionnaire_id', $id);
+        }])->where('is_active', true)->get();
 
         return view('user.questionnaire', [
             'questions'     => $questions,
