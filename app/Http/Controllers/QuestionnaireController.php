@@ -22,15 +22,15 @@ class QuestionnaireController extends Controller
 
         return view('user.questionnaire_overview', [
             'questionnaires' => $questionnaires,
-        ]);    
+        ]);
     }
 
     /**
-    * Handles the creation of a new questionnaire based on user input.
-    *
-    * @param \Illuminate\Http\Request
-    * @return \Illuminate\Http\RedirectResponse
-    */
+     * Handles the creation of a new questionnaire based on user input.
+     *
+     * @param \Illuminate\Http\Request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request)
     {
         $inputs = $request->all();
@@ -45,7 +45,7 @@ class QuestionnaireController extends Controller
         ];
 
         $validator = Validator::make($inputs, $rules);
-        if($validator->fails()){
+        if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
@@ -60,10 +60,10 @@ class QuestionnaireController extends Controller
 
 
 
-    public function show(string $id){
-
+    public function show(string $id)
+    {
         $questionnaire = Questionnaire::find($id);
-        $questions = Question::with(['answer' => function ($query) use ($id){
+        $questions = Question::with(['answer' => function ($query) use ($id) {
             $query->where('questionnaire_id', $id);
         }])->where('is_active', true)->get();
 
@@ -74,18 +74,49 @@ class QuestionnaireController extends Controller
     }
 
 
+    public function validator($inputs, $questions)
+    {
 
-    public function storeAnswers(Request $request){
+        $messages = [
+            'answers.*.max' => 'Number must not be greater than 100.',
+            'answers.*.numeric' => 'Input must be numeric.',
+        ];
+
+        $validator = Validator::make($inputs, [], $messages);
+
+        foreach ($questions as $id => $question) {
+            $rule = 'nullable|numeric';
+            if ($question['type'] == 1) {
+                $rule .= '|max:100';
+            }
+
+            $validator->sometimes("answers.$id", $rule, function (){
+                return true;
+            });
+        }
+        return $validator;
+    }
+
+    public function storeAnswers(Request $request)
+    {
 
         $questionnaireId = $request->input('questionnaire_id');
         $answers = $request->input('answers');
+        $inputs = $request->all();
+        $questions = $inputs['questions'];
 
-        foreach($answers as $questionId => $answer){
+        $validator = $this->validator($inputs, $questions);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        foreach ($answers as $questionId => $answer) {
             $existingAnswer = Answer::where('question_id', $questionId)
-            ->where('questionnaire_id', $questionnaireId)
-            ->first();
+                ->where('questionnaire_id', $questionnaireId)
+                ->first();
 
-            if($existingAnswer){
+            if ($existingAnswer) {
                 $existingAnswer->update(['name' => $answer]);
             }
             Answer::create([
@@ -94,20 +125,20 @@ class QuestionnaireController extends Controller
                 'questionnaire_id' => $questionnaireId
             ]);
         }
-        return redirect()->back();
+        return redirect()->route('questionnaire')->with('success', 'Questionnaire submitted successfully');
     }
 
-  /**
-   * Deletes a specific questionnaire identified by its ID.
-   * 
-   * @param string $id
-   * @return \Illuminate\Http\RedirectResponse
-   */
+    /**
+     * Deletes a specific questionnaire identified by its ID.
+     * 
+     * @param string $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy(string $id)
     {
         $questionnaire = Questionnaire::find($id);
 
-        if($questionnaire){
+        if ($questionnaire) {
             $questionnaire->delete();
             return redirect()->back()->with('success', 'Questionnaire successfully deleted.');
         }
