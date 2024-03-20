@@ -85,7 +85,7 @@
                                                 <a href="{{ route('questionnaire.show', $q->id) }}" class="btn btn-dark btn-sm me-2"
                                                     style="background-color: #f86e38; border:none;">Answer</a>
 
-                                                <a href="" class="btn btn-dark btn-sm me-2"
+                                                <a href="{{ route('statistics', $q->id) }}" class="btn btn-dark btn-sm me-2"
                                                     style="background-color: #3168ff; border: none;">Compare</a>
 
                                                 <form action="{{ route('questionnaire.delete', $q->id) }}" method="POST"

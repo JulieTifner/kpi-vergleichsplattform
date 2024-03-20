@@ -59,7 +59,12 @@ class QuestionnaireController extends Controller
     }
 
 
-
+    /**
+     * Display specified questionnaire with its active questions and answers.
+     *
+     * @param string $id
+     * @return \Illuminate\View\View
+     */
     public function show(string $id)
     {
         $questionnaire = Questionnaire::find($id);
@@ -73,7 +78,13 @@ class QuestionnaireController extends Controller
         ]);
     }
 
-
+    /**
+     * Validates answer inputs based on specific rules for each question type.
+     * 
+     * @param array $inputs
+     * @param array $questions
+     * @return \Illuminate\Contracts\Validation\Validator 
+     */
     public function validator($inputs, $questions)
     {
 
@@ -97,6 +108,12 @@ class QuestionnaireController extends Controller
         return $validator;
     }
 
+    /**
+     * Stores or updates answers submitted for a questionnaire.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function storeAnswers(Request $request)
     {
 

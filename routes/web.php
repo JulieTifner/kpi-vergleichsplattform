@@ -40,6 +40,8 @@ Route::prefix('user')->middleware(['auth', 'isUser'])->group(function () {
     Route::post('/store', [App\Http\Controllers\QuestionnaireController::class, 'store'])->name('questionnaire.store');
     Route::post('/store/answers', [App\Http\Controllers\QuestionnaireController::class, 'storeAnswers'])->name('answers.store');
     Route::delete('/delete/{id}', [App\Http\Controllers\QuestionnaireController::class, 'destroy'])->name('questionnaire.delete');
+    Route::get('/statistics/{id}', [App\Http\Controllers\StatisticController::class, 'index'])->name('statistics');
+
 
 
 });
