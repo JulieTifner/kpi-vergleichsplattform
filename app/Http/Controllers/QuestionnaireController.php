@@ -101,7 +101,7 @@ class QuestionnaireController extends Controller
                 $rule .= '|max:100';
             }
 
-            $validator->sometimes("answers.$id", $rule, function (){
+            $validator->sometimes("answers.$id", $rule, function () {
                 return true;
             });
         }
@@ -128,20 +128,27 @@ class QuestionnaireController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
+
+
         foreach ($answers as $questionId => $answer) {
+
             $existingAnswer = Answer::where('question_id', $questionId)
                 ->where('questionnaire_id', $questionnaireId)
                 ->first();
 
             if ($existingAnswer) {
                 $existingAnswer->update(['name' => $answer]);
+            } else {
+                if (!empty($answer)) {
+                    Answer::create([
+                        'name'             => $answer,
+                        'question_id'      => $questionId,
+                        'questionnaire_id' => $questionnaireId,
+                    ]);
+                }
             }
-            Answer::create([
-                'name'             => $answer,
-                'question_id'      => $questionId,
-                'questionnaire_id' => $questionnaireId
-            ]);
         }
+
         return redirect()->route('questionnaire')->with('success', 'Questionnaire submitted successfully');
     }
 
