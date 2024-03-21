@@ -91,6 +91,7 @@ class QuestionnaireController extends Controller
         $messages = [
             'answers.*.max' => 'Number must not be greater than 100.',
             'answers.*.numeric' => 'Input must be numeric.',
+            'answers.*.digits_between' => 'Input must not have more than 10 digits.'
         ];
 
         $validator = Validator::make($inputs, [], $messages);
@@ -99,6 +100,8 @@ class QuestionnaireController extends Controller
             $rule = 'nullable|numeric';
             if ($question['type'] == 1) {
                 $rule .= '|max:100';
+            }else{
+                $rule .= '|digits_between:1,10';
             }
 
             $validator->sometimes("answers.$id", $rule, function () {

@@ -8,7 +8,10 @@ use Illuminate\Http\Request;
 class StatisticController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Retrieves and categorizes questions based on their type along with their answers for selected questionnaire.
+     *
+     * @param string $id
+     * @return \Illuminate\Contracts\View\View 
      */
     public function index(string $id)
     {
@@ -47,6 +50,12 @@ class StatisticController extends Controller
         ]);
     }
 
+
+    /**
+     * Calculates the average values for answers to each question, differentiating between types.
+     *
+     * @return array
+     */
     public function compareAnswers(){
         
         $questionsWithAnswers = Question::whereHas('answer', function ($query){
