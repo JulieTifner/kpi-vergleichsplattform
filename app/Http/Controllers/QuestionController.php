@@ -31,11 +31,14 @@ class QuestionController extends Controller
     {
         $inputs = $request->all();
 
+        $messages = [
+            'name' => 'Title must not have more than 255 characters',
+        ];
         $rules = [
             'name' => 'required|string|max:255',
         ];
 
-        $validator = Validator::make($inputs, $rules);
+        $validator = Validator::make($inputs, $rules, $messages);
         
         if($validator->fails()){
             return redirect()->back()->withErrors($validator)->withInput();

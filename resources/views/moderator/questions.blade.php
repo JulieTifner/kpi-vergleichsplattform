@@ -56,6 +56,15 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
+                @if ($errors->any())
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <ul class="list-unstyled">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <h2>Questions</h2>
                 <div class="questions">
                     <div class="table-container">
@@ -97,7 +106,8 @@
                                                     @method('DELETE')
                                                     @csrf
                                                     <button type="submit" class="btn btn-danger btn-sm"
-                                                        style="color:white;" onclick="return confirm('Are you sure to delete?')">
+                                                        style="color:white;"
+                                                        onclick="return confirm('Are you sure to delete?')">
                                                         <i class="fas fa-trash"></i>
                                                     </button>
                                                 </form>

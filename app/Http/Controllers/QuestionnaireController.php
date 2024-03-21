@@ -33,6 +33,10 @@ class QuestionnaireController extends Controller
      */
     public function store(Request $request)
     {
+        $messages = [
+            'name' => 'Title must not have more than 255 characters',
+        ];
+
         $inputs = $request->all();
         $rules = [
             'name' => 'required|string|max:255',
@@ -44,7 +48,7 @@ class QuestionnaireController extends Controller
             ],
         ];
 
-        $validator = Validator::make($inputs, $rules);
+        $validator = Validator::make($inputs, $rules, $messages);
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }

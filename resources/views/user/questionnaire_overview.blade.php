@@ -27,7 +27,7 @@
                             <div class="form-group">
                                 <label for="type">Quartal / Semester</label>
                                 <select class="form-control" id="timespan" name="timespan">
-                                    <option value="Null">Null</option>
+                                    <option value="Year">Year</option>
                                     <option value="S1">S1</option>
                                     <option value="S2">S2</option>
                                     <option value="Q1">Q1</option>
@@ -58,6 +58,15 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
+                @if ($errors->any())
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <ul class="list-unstyled">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <h2>Questionnaires</h2>
                 <div class="questionnaires">
                     <div class="table-container">
@@ -82,7 +91,8 @@
                                         <td style="width: 100px;">
                                             <div class="d-flex" role="group">
 
-                                                <a href="{{ route('questionnaire.show', $q->id) }}" class="btn btn-dark btn-sm me-2"
+                                                <a href="{{ route('questionnaire.show', $q->id) }}"
+                                                    class="btn btn-dark btn-sm me-2"
                                                     style="background-color: #f86e38; border:none;">Answer</a>
 
                                                 <a href="{{ route('statistics', $q->id) }}" class="btn btn-dark btn-sm me-2"
